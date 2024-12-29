@@ -1,18 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-backend
+  labels:
+    app: node-backend
 spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-backend
   template:
+    metadata:
+      labels:
+        app: node-backend
     spec:
       containers:
-      - env:
+      - name: node-backend
+        image: node
+        ports:
+        - containerPort: 8080
+        env:
         - name: DB_USERNAME
           valueFrom:
-             secretKeyRef:
-               name: my-database-secret
-               key: user
+            secretKeyRef:
+              name: my-database-secret
+              key: user
         - name: DB_PASSWORD
           valueFrom:
-             secretKeyRef:
-               name: my-database-secret
-               key: password
+            secretKeyRef:
+              name: my-database-secret
+              key: password
+        - name: DB_HOST
+          value: postgresql # The name of your PostgreSQL service
+        - name: DB_PORT
+          value: "5432" # Default PostgreSQL port
+        - name: DB_NAME
+          value: books-db # Replace with the name of your database
         readinessProbe:
           httpGet:
             path: /ready
@@ -22,14 +45,21 @@ spec:
           initialDelaySeconds: 10
           periodSeconds: 5
           successThreshold: 1
-          timeoutSeconds: 1
+          timeoutSeconds: 2 # Adjusted for reliability
         livenessProbe:
           httpGet:
             path: /live
             port: 8080
             scheme: HTTP
-          failureThreshold: 2
+          failureThreshold: 3
           initialDelaySeconds: 60
-          periodSeconds: 3
+          periodSeconds: 5
           successThreshold: 1
-          timeoutSeconds: 1
+          timeoutSeconds: 2
+        resources: # Optional, helps prevent resource exhaustion
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
