@@ -1,0 +1,58 @@
+{
+  "name": "nodejs-health-check",
+  "version": "4.0.0",
+  "author": "Red Hat, Inc.",
+  "license": "Apache-2.0",
+  "scripts": {
+    "pretest": "eslint --ignore-path .gitignore .",
+    "test": "nyc --reporter=lcov mocha",
+    "release": "standard-version -a",
+    "openshift": "nodeshift --dockerImage=registry.access.redhat.com/ubi8/nodejs-18",
+    "openshift:enable:trace": "nodeshift --deploy.env NODE_OPTIONS='--require ./tracing.js' --dockerImage=registry.access.redhat.com/ubi8/nodejs-18",
+    "start": "node .",
+    "dev": "node . | npx pino-pretty",
+    "dev:debug": "DEBUG=* node . "
+  },
+  "main": "./bin/www",
+  "files": [
+    "package.json",
+    "app.js",
+    "logger.js",
+    "tracing.js",
+    "public",
+    "bin",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nodeshift-starters/nodejs-health-check.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nodeshift-starters/nodejs-health-check/issues"
+  },
+  "homepage": "https://github.com/nodeshift-starters/nodejs-health-check",
+  "devDependencies": {
+    "eslint": "^8.22.0",
+    "eslint-config-semistandard": "^17.0.0",
+    "mocha": "^10.1.0",
+    "nodeshift": "~8.7.0",
+    "nyc": "~15.1.0",
+    "proxyquire": "~2.1.3",
+    "standard-version": "^9.5.0",
+    "supertest": "~6.3.0"
+  },
+  "dependencies": {
+    "@opentelemetry/api": "^1.3.0",
+    "@opentelemetry/exporter-jaeger": "^1.8.0",
+    "@opentelemetry/instrumentation": "^0.34.0",
+    "@opentelemetry/instrumentation-express": "^0.32.0",
+    "@opentelemetry/instrumentation-http": "^0.34.0",
+    "@opentelemetry/resources": "^1.8.0",
+    "@opentelemetry/sdk-trace-base": "^1.9.0",
+    "@opentelemetry/sdk-trace-node": "^1.8.0",
+    "@opentelemetry/semantic-conventions": "^1.8.0",
+    "body-parser": "~1.20.0",
+    "express": "~4.18.2",
+    "pino": "^8.4.2"
+  }
+}
