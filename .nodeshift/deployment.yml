@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: node-backend
-        image: node # Replace with the actual Node.js image (e.g., 'your-node-backend-image:v1')
+        image: image-registry.openshift-image-registry.svc:5000/cloud-project/node@sha256:eebd17c30e09d14f9631233291acc7b9256d6fc73cf1ee4e30fabbdda39bedc9# Replace with the actual Node.js image (e.g., 'your-node-backend-image:v1')
         ports:
         - containerPort: 8080
         env:
