@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: node-backend
-        image: node
+        image: node # Replace with the actual Node.js image (e.g., 'your-node-backend-image:v1')
         ports:
         - containerPort: 8080
         env:
@@ -31,11 +31,11 @@ spec:
               name: my-database-secret
               key: password
         - name: DB_HOST
-          value: postgresql # The name of your PostgreSQL service
+          value: postgresql # Ensure this matches the PostgreSQL service name
         - name: DB_PORT
           value: "5432" # Default PostgreSQL port
         - name: DB_NAME
-          value: books-db # Replace with the name of your database
+          value: books-db # Ensure this matches the database name
         readinessProbe:
           httpGet:
             path: /ready
@@ -45,7 +45,7 @@ spec:
           initialDelaySeconds: 10
           periodSeconds: 5
           successThreshold: 1
-          timeoutSeconds: 2 # Adjusted for reliability
+          timeoutSeconds: 2
         livenessProbe:
           httpGet:
             path: /live
@@ -56,10 +56,11 @@ spec:
           periodSeconds: 5
           successThreshold: 1
           timeoutSeconds: 2
-        resources: # Optional, helps prevent resource exhaustion
+        resources:
           requests:
             memory: "256Mi"
             cpu: "250m"
           limits:
             memory: "512Mi"
             cpu: "500m"
+      restartPolicy: Always
