@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 const db = require('./lib/db');
-const Books = require('./lib/routes/Books');
+const Books = require('./lib/routes/books');
 
 // Middleware to parse JSON and URL-encoded payloads
 app.use(bodyParser.json());
