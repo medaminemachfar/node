@@ -10,7 +10,7 @@ const mockDb = {
   }
 };
 
-const Books = proxyquire('../lib/api/Books', {
+const Books = proxyquire('../lib/api/books', {
   '../db': mockDb
 });
 

@@ -163,14 +163,14 @@
             this.form.id = Book.id;
           },
           async remove(Book) {
-            await fetch(`/api/Books/${Book.id}`, {
+            await fetch(`/api/books/${Book.id}`, {
               method: 'DELETE',
             })
               .then(this._success)
               .catch(this._error);
           },
           async _refreshPageData() {
-            const result = await fetch('/api/Books', { method: 'GET' });
+            const result = await fetch('/api/books', { method: 'GET' });
             if (result.ok) {
               const resultData = await result.json();
               this.Books = resultData;
@@ -181,10 +181,10 @@
           async update() {
             if (this.form.id == -1) {
               this.method = 'POST';
-              this.url = '/api/Books';
+              this.url = '/api/books';
             } else {
               this.method = 'PUT';
-              this.url = `/api/Books/${this.form.id}`;
+              this.url = `/api/books/${this.form.id}`;
             }
 
             await fetch(this.url, {
