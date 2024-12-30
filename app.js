@@ -11,6 +11,7 @@ const db = require('./lib/db');
 const Books = require('./lib/routes/books');
 
 // Middleware to parse JSON and URL-encoded payloads
+app.use('/', indexRouter);
 app.use(bodyParser.json());
 app.use((error, request, response, next) => {
   if (request.body === '' || (error instanceof SyntaxError && error.type === 'entity.parse.failed')) {
