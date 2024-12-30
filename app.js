@@ -11,7 +11,7 @@ const createError = require('http-errors');
 const db = require('./lib/db');
 const logger = require('./logger.js');
 const Books = require('./lib/routes/books');
-const indexRouter = require('./routes/index');
+
 
 const app = express();
 
@@ -40,7 +40,7 @@ app.use((error, req, res, next) => {
 app.use('/api', Books);
 
 // Static route
-app.use('/', indexRouter);
+
 
 // Health check routes
 app.use('/ready', (req, res) => res.sendStatus(200));
